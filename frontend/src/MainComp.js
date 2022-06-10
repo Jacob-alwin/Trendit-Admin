@@ -19,6 +19,7 @@ import AgentDetails from './pages/AgentDetails';
 import Header from './components/Header';
 import HeaderMobile from './components/HeaderMobile';
 import CreateAgent from './pages/CreateAgent';
+import UserReported from './pages/UserReported';
 
 
 
@@ -49,6 +50,8 @@ function MainComp() {
               <Routes>
                 <Route exact path='/' element ={<Users/>}/>
                 <Route exact path='/agent' element ={<Agent/>}/>
+                <Route exact path='/userreported' element ={<UserReported/>}/>
+
                 <Route exact path='/agentdetails' element ={<AgentDetails/>}/>
                 <Route exact path='/agentcreate' element ={<CreateAgent/>}/>
                 <Route exact path='/ads' element ={<Ads/>}/>

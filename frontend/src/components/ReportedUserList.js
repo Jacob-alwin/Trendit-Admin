@@ -53,7 +53,7 @@ function ReportedUserList(props) {
         <span class="badge bg-danger">Pending</span> */}
     </td>
 
-    <td className={listSelected?"text-end edit-display":"text-end"}> <Link to={'/ad'} className="link-divs">
+    <td className={listSelected?"text-end edit-display":"text-end"}> <Link to={'/userreported'} className="link-divs">
 Edit</Link></td>
     <td className={listSelected?"text-end":"text-end delete-display"}><i class="mdi mdi-delete "></i></td>
 

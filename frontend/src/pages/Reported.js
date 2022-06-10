@@ -64,10 +64,7 @@ function Reported() {
                                                 })
                                             }
                                             
-                                            {/* <ReportedUserList   allChecked={userChecked}/>
-                                            <ReportedUserList   allChecked={userChecked}/>
-                                            <ReportedUserList   allChecked={userChecked}/> */}
-               
+                                          
                                            
                                             
                                         </tbody>
