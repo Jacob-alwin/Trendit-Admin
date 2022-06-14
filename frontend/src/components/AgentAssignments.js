@@ -4,6 +4,7 @@ import AdList from './AdList'
 import SearchBar from './SearchBar'
 import TableFooter from './TableFooter'
 import AdsHead from './AdsHead'
+import ReactPaginate from "react-paginate"
 
 function AgentAssignments({profile}) {
 
@@ -27,8 +28,8 @@ function AgentAssignments({profile}) {
              
               setApproved(data2.data)
 
+
               const  data3  = await axios.get(`/api/users/pending/${profile}`,config)
-             
               setPending(data3.data)      
              
                }
@@ -46,12 +47,12 @@ function AgentAssignments({profile}) {
             const pagesVisited2 = pageNumber2 * resultPerPage2;
 
             const displayResult2 = pending
-                .slice(pagesVisited2, pagesVisited2 + resultPerPage)
+                .slice(pagesVisited2, pagesVisited2 + resultPerPage2)
                 .map((product) => {
                 return <AdList title={product.name} id={product._id} product={product} allChecked={newallChecked}/>;
                 });
 
-            const pageCount2 = Math.ceil(pending.length / resultPerPage);
+            const pageCount2 = Math.ceil(pending.length / resultPerPage2);
 
             const changePage2 = ({ selected }) => {
                 setPageNumber2(selected);
@@ -100,15 +101,55 @@ function AgentAssignments({profile}) {
                         <table class="table">
                            <AdsHead setallChecked={newallChecked => setnewallChecked(newallChecked)} />
                             <tbody>
-                             {displayResult
-                             }
+
+                                {/* dummy data */}
+
+                              <AdList allChecked={newallChecked}/>
+                                <AdList allChecked={newallChecked}/>
+                                <AdList allChecked={newallChecked}/>
+                                <AdList allChecked={newallChecked}/>
                             
-                            {/* <AdList allChecked={newallChecked}/>
-                            <AdList allChecked={newallChecked}/>
-                            <AdList allChecked={newallChecked}/>
-                                <AdList allChecked={newallChecked}/> */}
-                   
+                           
                               
+
+                            </tbody>
+                        </table>
+                        {/* <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
+                            <div>Total Results <span>{approved.length}</span></div>
+                                <div class="ms-auto d-flex">
+                                    <ReactPaginate  
+                                    previousLabel={<i className="mdi mdi-chevron-left mdi-16px"></i>}
+                                    nextLabel={<i className="mdi mdi-chevron-right mdi-16px"></i>}
+                                    pageCount={pageCount}
+                                    onPageChange={changePage}
+                                    containerClassName={"pagination"} //UL
+                                    pageClassName={"page-item"} //li
+                                    previousLinkClassName={"page-link "} // <- a
+                                    nextLinkClassName={"page-link"}// -> a
+                                    pageLinkClassName={"page-link "} // a
+                                    previousClassName={"page-item"}
+                                    nextClassName={"page-item"}
+                                    disabledClassName={"nextpreviousdis"}
+                                    activeClassName={"page-item active"}
+                                />
+                            </div>
+                        </div> */}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
+                <table class="table">
+                <AdsHead setallChecked={assignedallChecked => setassignedallChecked(assignedallChecked)}/>
+
+                            <tbody>
+                            {
+                                displayResult.length?displayResult:''
+                                
+                                }
+                                {/* <AdList allChecked={assignedallChecked}/>
+                                <AdList allChecked={assignedallChecked}/>
+                                <AdList allChecked={assignedallChecked}/>
+                                <AdList allChecked={assignedallChecked}/> */}
+                                
 
                             </tbody>
                         </table>
@@ -134,25 +175,6 @@ function AgentAssignments({profile}) {
                                 />
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
-                <table class="table">
-                <AdsHead setallChecked={assignedallChecked => setassignedallChecked(assignedallChecked)}/>
-
-                            <tbody>
-                            {
-                                displayResult
-                             }
-                                {/* <AdList allChecked={assignedallChecked}/>
-                                <AdList allChecked={assignedallChecked}/>
-                                <AdList allChecked={assignedallChecked}/>
-                                <AdList allChecked={assignedallChecked}/> */}
-                                
-
-                            </tbody>
-                        </table>
-                       <TableFooter/>
                 </div>
                 <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
                 <table class="table">
@@ -160,13 +182,13 @@ function AgentAssignments({profile}) {
 
                             <tbody>
                             {
-                            displayResult2
+                            displayResult2.length?displayResult2:''
                              }       
 
                             </tbody>
                         </table>
                         <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
-                            <div>Total Results <span>{approved.length}</span></div>
+                            <div>Total Results <span>{pending.length}</span></div>
                                 <div class="ms-auto d-flex">
                                     {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
                                     <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}

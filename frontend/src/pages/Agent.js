@@ -86,7 +86,7 @@ function Agent() {
                         <table class="table">
                         <UserNameEmailHead setallChecked={allChecked => setallChecked(allChecked)} />
                                 <tbody>
-                                   {displayResult}
+                                   {displayResult.length?displayResult:''}
                                    
                             </tbody>
                         </table>

@@ -63,7 +63,7 @@ function Users() {
             <UserNameEmailHead
               setallChecked={(allChecked) => setallChecked(allChecked)}
             />
-            <tbody>{displayResult}</tbody>
+            <tbody>{displayResult.length?displayResult:''}</tbody>
           </table>
           <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
                                 <div>Total Results <span>{result.length}</span></div>

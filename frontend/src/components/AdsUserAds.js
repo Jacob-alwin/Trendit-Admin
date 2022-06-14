@@ -5,6 +5,8 @@ import AdsHead from './AdsHead'
 import SearchBar from './SearchBar'
 import TableFooter from './TableFooter'
 import axios from 'axios'
+import ReactPaginate from "react-paginate";
+
 function AdsUserAds(props) {
 
 
@@ -12,9 +14,10 @@ function AdsUserAds(props) {
     const [approved,setApproved] = useState("approved")
     const [product1,setProduct] = useState([])
     const [payment,setPayment] = useState([])
-    
     const [newChecked, setnewChecked] = useState(false)
-     var data1 ;
+
+    
+    var data1 ;
      
      useEffect(() => {
          console.log(props.p1._id)
@@ -31,6 +34,8 @@ function AdsUserAds(props) {
             const  data  = await axios.get(`/api/users/approved/${props.p1._id}`,config)
             console.log("1")
             setProduct(data.data)
+            // setPayment(data.data)
+
             console.log("1")
             }
             else{
@@ -38,29 +43,24 @@ function AdsUserAds(props) {
             const  data  = await axios.get(`/api/users/notapproved/${props.p1._id}`,config)    
             setProduct(data.data)
             console.log(data.data)
-            
             }
-           
              }
              fetchData();
        console.log(product1)
       }, [approved])
 
 
-    
-            const [pageNumber, setPageNumber] = useState(0);
 
+
+            const [pageNumber, setPageNumber] = useState(0);
             const resultPerPage = 5;
             const pagesVisited = pageNumber * resultPerPage;
-
             const displayResult = product1
                 .slice(pagesVisited, pagesVisited + resultPerPage)
                 .map((pro) => {
-                return <AdList allChecked={newChecked} title={pro.name} id={pro._id} product={pro}/>;
-                });
-
+                return <AdList allChecked={pendingChecked} title={pro.name} id={pro._id} product={pro}/>; 
+            });
             const pageCount = Math.ceil(product1.length / resultPerPage);
-
             const changePage = ({ selected }) => {
                 setPageNumber(selected);
             };
@@ -98,11 +98,9 @@ function AdsUserAds(props) {
                                             }
                                             </tbody>
                                         </table>
-                                        <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
+                                        {/* <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
                                         <div>Total Results <span>{approved.length}</span></div>
                                             <div class="ms-auto d-flex">
-                                                {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
-                                                <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}
                                                 <ReactPaginate  
                                                 previousLabel={<i className="mdi mdi-chevron-left mdi-16px"></i>}
                                                 nextLabel={<i className="mdi mdi-chevron-right mdi-16px"></i>}
@@ -119,7 +117,7 @@ function AdsUserAds(props) {
                                                 activeClassName={"page-item active"}
                                             />
                                         </div>
-                                    </div>
+                                    </div> */}
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
@@ -130,20 +128,19 @@ function AdsUserAds(props) {
                                            <AdsHead   setallChecked={pendingChecked => setpendingChecked(pendingChecked)}/>
                                             
                                             <tbody>
+
                                             {
-                                              displayResult
-                                               
+                                              displayResult.length?displayResult:''
                                             }
+
                                             
                                         
                                            
                                             </tbody>
                                         </table>
                                         <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
-                                        <div>Total Results <span>{approved.length}</span></div>
+                                        <div>Total Results <span>{product1.length}</span></div>
                                             <div class="ms-auto d-flex">
-                                                {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
-                                                <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}
                                                 <ReactPaginate  
                                                 previousLabel={<i className="mdi mdi-chevron-left mdi-16px"></i>}
                                                 nextLabel={<i className="mdi mdi-chevron-right mdi-16px"></i>}
@@ -157,8 +154,7 @@ function AdsUserAds(props) {
                                                 previousClassName={"page-item"}
                                                 nextClassName={"page-item"}
                                                 disabledClassName={"nextpreviousdis"}
-                                                activeClassName={"page-item active"}
-                                            />
+                                                activeClassName={"page-item active"} />
                                         </div>
                                     </div>
                                     </div>

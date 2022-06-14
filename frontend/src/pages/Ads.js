@@ -8,6 +8,8 @@ import TableFooter from '../components/TableFooter';
 import AdList from '../components/AdList';
 import AdsHead from '../components/AdsHead';
 import axios from 'axios';
+import ReactPaginate from "react-paginate";
+
 
 function Ads() {
 
@@ -19,6 +21,8 @@ function Ads() {
     const [assignedallChecked, setassignedallChecked] = useState(false)
     const [approvedProduct,setApprovedProduct] = useState([])
     const [pendingProduct,setPendingProduct] = useState([])
+    const [newProduct,setNewProduct] = useState([])
+    const [assignedProduct,setAssignedProduct] = useState([])
 
 
     console.log(allChecked)
@@ -41,29 +45,67 @@ function Ads() {
                   
           }, [])
 
-          const [pageNumber2, setPageNumber2] = useState(0);
 
-          const resultPerPage2 = 5;
-          const pagesVisited2 = pageNumber2 * resultPerPage2;
 
-          const displayResult2 = pendingProduct
-              .slice(pagesVisited2, pagesVisited2 + resultPerPage)
+          
+          //Assigned
+
+          const [pageNumber4, setPageNumber4] = useState(0);
+          const resultPerPage4 = 5;
+          const pagesVisited4 = pageNumber4 * resultPerPage4;
+          const displayResult4 = assignedProduct
+              .slice(pagesVisited4, pagesVisited4 + resultPerPage4)
               .map((product) => {
               return <AdList title={product.name} id={product._id} product={product} allChecked={newallChecked}/>;
               });
+          const pageCount4 = Math.ceil(assignedProduct.length / resultPerPage4);
 
-          const pageCount2 = Math.ceil(pendingProduct.length / resultPerPage);
+          const changePage4 = ({ selected }) => {
+              setPageNumber4(selected);
+          };
+
+
+          //New
+
+          
+          const [pageNumber3, setPageNumber3] = useState(0);
+          const resultPerPage3 = 5;
+          const pagesVisited3 = pageNumber3 * resultPerPage3;
+          const displayResult3 = newProduct
+              .slice(pagesVisited3, pagesVisited3 + resultPerPage3)
+              .map((product) => {
+              return <AdList title={product.name} id={product._id} product={product} allChecked={newallChecked}/>;
+              });
+          const pageCount3 = Math.ceil(newProduct.length / resultPerPage3);
+
+          const changePage3 = ({ selected }) => {
+              setPageNumber3(selected);
+          };
+
+
+          //Pendeing
+
+
+          const [pageNumber2, setPageNumber2] = useState(0);
+          const resultPerPage2 = 5;
+          const pagesVisited2 = pageNumber2 * resultPerPage2;
+          const displayResult2 = pendingProduct
+              .slice(pagesVisited2, pagesVisited2 + resultPerPage2)
+              .map((product) => {
+              return <AdList title={product.name} id={product._id} product={product} allChecked={newallChecked}/>;
+              });
+          const pageCount2 = Math.ceil(pendingProduct.length / resultPerPage2);
 
           const changePage2 = ({ selected }) => {
               setPageNumber2(selected);
           };
 
 
-          const [pageNumber, setPageNumber] = useState(0);
+          //Approved
 
+          const [pageNumber, setPageNumber] = useState(0);
           const resultPerPage = 5;
           const pagesVisited = pageNumber * resultPerPage;
-
           const displayResult = approvedProduct
               .slice(pagesVisited, pagesVisited + resultPerPage)
               .map((product) => {
@@ -105,7 +147,7 @@ function Ads() {
                                     <AdsHead setallChecked={newallChecked => setnewallChecked(newallChecked)}/>
                                         <tbody>
                                            {
-                                              displayResult
+                                              displayResult3.length?displayResult3:''
                                            }
                                           
                                             {/* <AdList allChecked={newallChecked}/>           */}
@@ -114,15 +156,15 @@ function Ads() {
                                         </tbody>
                                     </table>
                                     <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
-                                        <div>Total Results <span>{approved.length}</span></div>
+                                        <div>Total Results <span>{newProduct.length}</span></div>
                                             <div class="ms-auto d-flex">
                                                 {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
                                                 <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}
                                                 <ReactPaginate  
                                                 previousLabel={<i className="mdi mdi-chevron-left mdi-16px"></i>}
                                                 nextLabel={<i className="mdi mdi-chevron-right mdi-16px"></i>}
-                                                pageCount={pageCount}
-                                                onPageChange={changePage}
+                                                pageCount={pageCount3}
+                                                onPageChange={changePage3}
                                                 containerClassName={"pagination"} //UL
                                                 pageClassName={"page-item"} //li
                                                 previousLinkClassName={"page-link "} // <- a
@@ -144,30 +186,22 @@ function Ads() {
                                     <AdsHead setallChecked={assignedallChecked => setassignedallChecked(assignedallChecked)}/>
                                         <tbody>
                                         {
-                                               approvedProduct.map((product) => {
-                                                return(<AdList title={product.name} id={product._id} product={product} allChecked={assignedallChecked}/>)
-                                               })
-                                           }
-                                            {/* <AdList allChecked={assignedallChecked}/>          
-                                            <AdList allChecked={assignedallChecked}/>
-                                            <AdList allChecked={assignedallChecked}/>
-                                            <AdList allChecked={assignedallChecked}/>
-                                            <AdList allChecked={assignedallChecked}/>
-                                            <AdList allChecked={assignedallChecked}/> */}
-      
-                                         
+                                                displayResult4.length?displayResult4:''
+
+                                         }           
+                                        
                                         </tbody>
                                     </table>
                                     <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
-                                        <div>Total Results <span>{approved.length}</span></div>
+                                        <div>Total Results <span>{assignedProduct.length}</span></div>
                                             <div class="ms-auto d-flex">
                                                 {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
                                                 <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}
                                                 <ReactPaginate  
                                                 previousLabel={<i className="mdi mdi-chevron-left mdi-16px"></i>}
                                                 nextLabel={<i className="mdi mdi-chevron-right mdi-16px"></i>}
-                                                pageCount={pageCount2}
-                                                onPageChange={changePage2}
+                                                pageCount={pageCount4}
+                                                onPageChange={changePage4}
                                                 containerClassName={"pagination"} //UL
                                                 pageClassName={"page-item"} //li
                                                 previousLinkClassName={"page-link "} // <- a
@@ -189,35 +223,75 @@ function Ads() {
                                     <AdsHead setallChecked={pendingallChecked => setpendingallChecked(pendingallChecked)}/>
                                         <tbody>
                                         {
-                                               displayResult2
+                                               displayResult2.length?displayResult2:''
                                            }
                                          
                                          
                                         </tbody>
                                     </table>
-                                    <TableFooter/>
+                                    <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
+                                        <div>Total Results <span>{pendingProduct.length}</span></div>
+                                            <div class="ms-auto d-flex">
+                                                {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+                                                <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}
+                                                <ReactPaginate  
+                                                previousLabel={<i className="mdi mdi-chevron-left mdi-16px"></i>}
+                                                nextLabel={<i className="mdi mdi-chevron-right mdi-16px"></i>}
+                                                pageCount={pageCount2}
+                                                onPageChange={changePage2}
+                                                containerClassName={"pagination"} //UL
+                                                pageClassName={"page-item"} //li
+                                                previousLinkClassName={"page-link "} // <- a
+                                                nextLinkClassName={"page-link"}// -> a
+                                                pageLinkClassName={"page-link "} // a
+                                                previousClassName={"page-item"}
+                                                nextClassName={"page-item"}
+                                                disabledClassName={"nextpreviousdis"}
+                                                activeClassName={"page-item active"}
+                                            />
+                                        </div>
+                                    </div>
                                  </div>
                             </div>
                             <div class="tab-pane fade" id="pills-approved" role="tabpanel" aria-labelledby="pills-approved-tab">
 
                                 <SearchBar/>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                        <AdsHead setallChecked={approvedallChecked => setapprovedallChecked(approvedallChecked)}/>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                    <AdsHead setallChecked={newallChecked => setnewallChecked(newallChecked)}/>
                                         <tbody>
-                                        {
-                                               pendingProduct.map((product) => {
-                                                return(
-                                                <AdList title={product.name} id={product._id} product={product} allChecked={approvedallChecked}/>
-                                                )
-                                               })
+                                           {
+                                              displayResult.length?displayResult:''
                                            }
-                                        
+                                          
+                                            {/* <AdList allChecked={newallChecked}/>           */}
+                                           
                                          
                                         </tbody>
                                     </table>
-                                    <TableFooter/>
-                                </div>
+                                    <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
+                                        <div>Total Results <span>{approvedProduct.length}</span></div>
+                                            <div class="ms-auto d-flex">
+                                                {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+                                                <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}
+                                                <ReactPaginate  
+                                                previousLabel={<i className="mdi mdi-chevron-left mdi-16px"></i>}
+                                                nextLabel={<i className="mdi mdi-chevron-right mdi-16px"></i>}
+                                                pageCount={pageCount}
+                                                onPageChange={changePage}
+                                                containerClassName={"pagination"} //UL
+                                                pageClassName={"page-item"} //li
+                                                previousLinkClassName={"page-link "} // <- a
+                                                nextLinkClassName={"page-link"}// -> a
+                                                pageLinkClassName={"page-link "} // a
+                                                previousClassName={"page-item"}
+                                                nextClassName={"page-item"}
+                                                disabledClassName={"nextpreviousdis"}
+                                                activeClassName={"page-item active"}
+                                            />
+                                        </div>
+                                    </div>
+                             </div>
 
                             </div>
                    

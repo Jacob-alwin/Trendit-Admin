@@ -20,20 +20,20 @@ function UserReported() {
                     <AdsUserInfo/>
                     <div class="col-lg-12 mt-5 col-xl-7 col-xxl-8">  
                     <div class="row mb-3">
-    <div class="col-12">
-        <div class="card panel-card">
-            <div class="card-header">
-                Reported
-            </div>
-                                 
-            <UserReportedList/>
-            <UserReportedList/>
-            <UserReportedList/>
-            <UserReportedList/>
-            <UserReportedList/>
-            
-        </div>
-    </div>
+                    <div class="col-12">
+                        <div class="card panel-card">
+                            <div class="card-header">
+                                Reported
+                            </div>
+                                                
+                            <UserReportedList/>
+                            <UserReportedList/>
+                            <UserReportedList/>
+                            <UserReportedList/>
+                            <UserReportedList/>
+                            
+                        </div>
+                    </div>
     </div>
                         </div>
 

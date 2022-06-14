@@ -9,6 +9,8 @@ import axios from 'axios';
 import ReportedUserList from '../components/ReportedUserList';
 import ReportedAdsHead from '../components/ReportedAdsHead';
 import ReportedAdsList from '../components/ReportedAdsList';
+import ReactPaginate from "react-paginate";
+
 
 function Reported() {
 
@@ -29,6 +31,23 @@ function Reported() {
              fetchData();
             
     }, [])
+
+
+
+    const [pageNumber, setPageNumber] = useState(0);
+    const resultPerPage = 5;
+    const pagesVisited = pageNumber * resultPerPage;
+    const displayResult = report
+        .slice(pagesVisited, pagesVisited + resultPerPage)
+        .map((report) => {
+        return <ReportedUserList user={report}   allChecked={userChecked}/>;
+        });
+
+    const pageCount = Math.ceil(report.length / resultPerPage);
+
+    const changePage = ({ selected }) => {
+        setPageNumber(selected);
+    }; 
    
 
 
@@ -59,9 +78,7 @@ function Reported() {
                                          <ReportUserHead  setallChecked={userChecked => setuserChecked(userChecked)} />
                                         <tbody>
                                             {
-                                                report.map((report) => {
-                                                    return(<ReportedUserList user={report}   allChecked={userChecked}/>)
-                                                })
+                                                displayResult.length?displayResult:''
                                             }
                                             
                                           
@@ -70,7 +87,28 @@ function Reported() {
                                         </tbody>
                                     </table>
 
-                                    <TableFooter/>
+                                    <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
+                            <div>Total Results <span>{report.length}</span></div>
+                                <div class="ms-auto d-flex">
+                                    {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
+                                    <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}
+                                    <ReactPaginate  
+                                    previousLabel={<i className="mdi mdi-chevron-left mdi-16px"></i>}
+                                    nextLabel={<i className="mdi mdi-chevron-right mdi-16px"></i>}
+                                    pageCount={pageCount}
+                                    onPageChange={changePage}
+                                    containerClassName={"pagination"} //UL
+                                    pageClassName={"page-item"} //li
+                                    previousLinkClassName={"page-link "} // <- a
+                                    nextLinkClassName={"page-link"}// -> a
+                                    pageLinkClassName={"page-link "} // a
+                                    previousClassName={"page-item"}
+                                    nextClassName={"page-item"}
+                                    disabledClassName={"nextpreviousdis"}
+                                    activeClassName={"page-item active"}
+                                />
+                            </div>
+                        </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">

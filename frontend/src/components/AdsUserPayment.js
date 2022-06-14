@@ -4,6 +4,8 @@ import AdsUserPaymentHead from './AdsUserPaymentHead'
 import AdsUserPaymentList from './AdsUserPaymentList'
 import SearchBar from './SearchBar'
 import TableFooter from './TableFooter'
+import ReactPaginate from "react-paginate";
+
 import axios from 'axios'
 
  function AdsUserPayment(props) {
@@ -33,17 +35,16 @@ import axios from 'axios'
   }, [])
   console.log(payment)
 
-  const [pageNumber, setPageNumber] = useState(0);
 
+
+  const [pageNumber, setPageNumber] = useState(0);
   const resultPerPage = 5;
   const pagesVisited = pageNumber * resultPerPage;
-
   const displayResult = payment
       .slice(pagesVisited, pagesVisited + resultPerPage)
       .map((pay) => {
       return <AdsUserPaymentList allChecked={allChecked} payment={pay}/>;
       });
-
   const pageCount = Math.ceil(payment.length / resultPerPage);
 
   const changePage = ({ selected }) => {
@@ -58,6 +59,7 @@ import axios from 'axios'
 <h4 class="page-sub-title mt-4">Payments</h4>
                     <div class="card admin-card">
                        <SearchBar/>
+                        
                         <div class="table-responsive">
                             <table class="table">
 
@@ -65,7 +67,7 @@ import axios from 'axios'
                        
                                 <tbody>
                                   {
-                                    displayResult
+                                    displayResult.length?displayResult:''
                                   }
                                   {/* {
                                     payment.map((pay) => {
@@ -81,7 +83,7 @@ import axios from 'axios'
                                 </tbody>
                             </table>
                                       <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
-                                        <div>Total Results <span>{approved.length}</span></div>
+                                        <div>Total Results <span>{payment.length}</span></div>
                                             <div class="ms-auto d-flex">
                                                 {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
                                                 <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}
