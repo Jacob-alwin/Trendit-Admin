@@ -13,7 +13,10 @@ function AdAgent(props) {
                 Agent
             </div>
             <div class="card-body pe-4 ps-4">
-                {/* <SearchBar/> */}
+                <SearchBar/>
+                <div class="search-area d-flex me-5 p-4">
+                    <input class="form-control me-3" placeholder="Assign Agent" />
+                    <button class="btn btn-primary">Assign</button>
                 <h4 class="regular-title my-3">Assigned</h4>
                 <ul class="p-0 d-flex flex-column product-description-lists">
                 <AdAgents agent={props.product.agentName}/>
