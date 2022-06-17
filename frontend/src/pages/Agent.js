@@ -92,7 +92,7 @@ function Agent() {
 
 
                     <div class="search-area d-flex p-4">
-                                    <input class="form-control me-3" placeholder="Search user" onChange={(e) => (setAgentsFilter(e.target.value))} />
+                                    <input class="form-control me-3" placeholder="Search Agent" onChange={(e) => (setAgentsFilter(e.target.value))} />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 

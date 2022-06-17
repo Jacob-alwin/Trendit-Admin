@@ -69,7 +69,7 @@ function Users() {
 
       <div class="card admin-card">
         <div class="search-area d-flex p-4">
-            <input class="form-control me-3" placeholder="Search user" onChange={(e)=>(setUsersFilter(e.target.value))} />
+            <input class="form-control me-3" placeholder="Search  User" onChange={(e)=>(setUsersFilter(e.target.value))} />
             <button class="btn btn-primary">Search</button>
         </div>
                                 

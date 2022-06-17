@@ -87,7 +87,7 @@ function Reported() {
                     <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
                             <div class="search-area d-flex p-4">
-                                    <input class="form-control me-3" placeholder="Search user" onChange={(e) => (setReportFilter(e.target.value))} />
+                                    <input class="form-control me-3" placeholder="Search Reported User" onChange={(e) => (setReportFilter(e.target.value))} />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 
@@ -134,7 +134,7 @@ function Reported() {
                             </div>
                             {/* <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
                             <div class="search-area d-flex p-4">
-                                    <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                    <input class="form-control me-3" placeholder="Search Reported User" onChange={handleChange} />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 
