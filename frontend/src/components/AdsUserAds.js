@@ -2,8 +2,6 @@ import React,{useState} from 'react'
 import { useEffect } from 'react'
 import AdList from './AdList'
 import AdsHead from './AdsHead'
-import SearchBar from './SearchBar'
-import TableFooter from './TableFooter'
 import axios from 'axios'
 import ReactPaginate from "react-paginate";
 
@@ -85,7 +83,12 @@ function AdsUserAds(props) {
                     <div class="card admin-card">
                         <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
-                                    <SearchBar/>
+                                
+                                    <div class="search-area d-flex p-4">
+                                        {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                                        <button class="btn btn-primary">Search</button>
+                                    </div>
+                                    
                                     <div class="table-responsive">
                                         <table class="table">
                                            <AdsHead  setallChecked={newChecked => setnewChecked(newChecked)}/>
@@ -122,7 +125,12 @@ function AdsUserAds(props) {
                                 </div>
                                 <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
 
-                                <SearchBar/>
+                                
+                                <div class="search-area d-flex p-4">
+                                    {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                                    <button class="btn btn-primary">Search</button>
+                                </div>
+                                
                                     <div class="table-responsive">
                                         <table class="table">
                                            <AdsHead   setallChecked={pendingChecked => setpendingChecked(pendingChecked)}/>

@@ -2,9 +2,6 @@ import React,{useState,useEffect} from 'react'
 import "../css/App.css";
 import axios from 'axios';
 import Headings from '../components/Headings'
-import SearchBar from '../components/SearchBar'
-import UserList from '../components/UserList'
-import TableFooter from '../components/TableFooter';
 import ReactPaginate from "react-paginate";
 
 
@@ -80,8 +77,11 @@ function Agent() {
                     
 
 
-                <SearchBar/>
-
+                    <div class="search-area d-flex p-4">
+                                    {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                                    <button class="btn btn-primary">Search</button>
+                                </div>
+                                
                 <div class="table-responsive">
                         <table class="table">
                         <UserNameEmailHead setallChecked={allChecked => setallChecked(allChecked)} />

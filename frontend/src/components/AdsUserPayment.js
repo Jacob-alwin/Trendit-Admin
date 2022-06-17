@@ -2,8 +2,6 @@ import React,{useState,useEffect} from 'react'
 
 import AdsUserPaymentHead from './AdsUserPaymentHead'
 import AdsUserPaymentList from './AdsUserPaymentList'
-import SearchBar from './SearchBar'
-import TableFooter from './TableFooter'
 import ReactPaginate from "react-paginate";
 
 import axios from 'axios'
@@ -58,7 +56,11 @@ import axios from 'axios'
 
 <h4 class="page-sub-title mt-4">Payments</h4>
                     <div class="card admin-card">
-                       <SearchBar/>
+                      <div class="search-area d-flex p-4">
+                          {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                          <button class="btn btn-primary">Search</button>
+                      </div>
+                      
                         
                         <div class="table-responsive">
                             <table class="table">

@@ -1,8 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import AdList from './AdList'
-import SearchBar from './SearchBar'
-import TableFooter from './TableFooter'
 import AdsHead from './AdsHead'
 import ReactPaginate from "react-paginate"
 
@@ -96,7 +94,11 @@ function AgentAssignments({profile}) {
         <div class="card admin-card">
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
-                     <SearchBar/>
+                    <div class="search-area d-flex p-4">
+                        {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                        <button class="btn btn-primary">Search</button>
+                    </div>
+                                
                     <div class="table-responsive">
                         <table class="table">
                            <AdsHead setallChecked={newallChecked => setnewallChecked(newallChecked)} />
@@ -137,6 +139,11 @@ function AgentAssignments({profile}) {
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
+                <div class="search-area d-flex p-4">
+                    {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                    <button class="btn btn-primary">Search</button>
+                </div>
+                                
                 <table class="table">
                 <AdsHead setallChecked={assignedallChecked => setassignedallChecked(assignedallChecked)}/>
 

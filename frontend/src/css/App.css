@@ -770,7 +770,7 @@ Link{
   position: absolute;
   max-width: 70%;
   background-color: #fff;
-  border: 1px solid #c80000;
+  border: 1px solid #fab454;
   border-radius: 2px;
   padding: 4px 25px 4px 10px;
   top: 50%;
@@ -783,7 +783,7 @@ Link{
   pointer-events: none;
 
   font-family: Poppins-Regular;
-  color: #c80000;
+  color: #fab454;
   font-size: 13px;
   line-height: 1.4;
   text-align: left;
@@ -801,7 +801,7 @@ Link{
   content: "\f06a";
   font-family: FontAwesome;
   font-size: 16px;
-  color: #c80000;
+  color: #fab454;
 
   display: block;
   position: absolute;
@@ -819,3 +819,99 @@ Link{
   visibility: visible;
   opacity: 1;
 }
+
+
+
+
+
+
+#input-label {
+    display: none;
+  }
+  
+  .input-wrap {
+    height: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem 0 1rem;
+    border-radius: 0.8rem;
+    background: #fab454;
+    box-sizing: border-box;
+  }
+  
+  .input-wrap i {
+    font-size: 1.5rem;
+    color: white;
+  }
+  
+  #product-search {
+    font-size: 1.5rem;
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: 0 0 0 1rem;
+    background: #fab454;
+    border: none;
+    outline: none;
+  }
+  
+  #product-search::placeholder {
+    color: white;
+    opacity: 0.7;
+  }
+  
+  .fa-times:hover {
+    cursor: pointer;
+  }
+  
+  .results-wrap {
+    
+    min-height: 7rem;
+    max-height: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .list-item {
+    display: inline-flex;
+    word-wrap: initial;
+    list-style-type: none;
+    background: black;
+    border-radius: 9px;
+    color: white;
+    padding: .5rem;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    text-transform: capitalize;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  
+  .list-item:hover {
+    background: #fab454;
+  }
+  
+  
+  .list-item a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+  }
+  
+  .list-item a:hover {
+    color: tomato;
+    transition: 200ms ease-in;
+  }
+  
+  @media (max-width: 768px) {
+    .input-wrap {
+      width: 96%;
+    }
+    
+    .results-wrap {
+      width: 96%;
+    }
+  }
+  

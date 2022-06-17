@@ -56,8 +56,11 @@ function Users() {
       <Headings heading={head} />
 
       <div class="card admin-card">
-        <SearchBar />
-
+        <div class="search-area d-flex p-4">
+            {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+            <button class="btn btn-primary">Search</button>
+        </div>
+                                
         <div class="table-responsive">
           <table class="table">
             <UserNameEmailHead

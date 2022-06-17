@@ -2,9 +2,6 @@ import React,{useState,useEffect}  from 'react'
 import "../css/App.css";
 
 import Headings from '../components/Headings'
-import SearchBar from '../components/SearchBar'
-
-import TableFooter from '../components/TableFooter';
 import AdList from '../components/AdList';
 import AdsHead from '../components/AdsHead';
 import axios from 'axios';
@@ -24,6 +21,9 @@ function Ads() {
     const [newProduct,setNewProduct] = useState([])
     const [assignedProduct,setAssignedProduct] = useState([])
 
+    const [pendingFilter, setpendingFilter] = useState("p")
+    const [approvedFilter, setapprovedFilter] = useState("p")
+
 
     console.log(allChecked)
 
@@ -36,7 +36,12 @@ function Ads() {
           
              
                   const data =  await axios.get('http://127.0.0.1:5000/api/products/admin/approved')
-                  setApprovedProduct(data.data)
+                  const res = data.data;
+                  setApprovedProduct(res)
+
+
+
+                   
                   const data1 = await axios.get('http://127.0.0.1:5000/api/products/admin/pending')
                   setPendingProduct(data1.data)
                   
@@ -45,8 +50,7 @@ function Ads() {
                   
           }, [])
 
-
-
+     
           
           //Assigned
 
@@ -83,16 +87,27 @@ function Ads() {
           };
 
 
+
+
           //Pendeing
+
+          const handleChange = (e)=>{
+            setpendingFilter(e.target.value)
+          }
+
+          
 
 
           const [pageNumber2, setPageNumber2] = useState(0);
           const resultPerPage2 = 5;
           const pagesVisited2 = pageNumber2 * resultPerPage2;
-          const displayResult2 = pendingProduct
+          const displayResult2 =  pendingProduct
               .slice(pagesVisited2, pagesVisited2 + resultPerPage2)
               .map((product) => {
-              return <AdList title={product.name} id={product._id} product={product} allChecked={newallChecked}/>;
+                if(product.name.startsWith(pendingFilter)){
+
+                    return <AdList title={product.name} id={product._id} product={product} allChecked={newallChecked}/>;
+                }
               });
           const pageCount2 = Math.ceil(pendingProduct.length / resultPerPage2);
 
@@ -141,7 +156,12 @@ function Ads() {
                     <div class="card admin-card">
                     <div class="tab-content" id="pills-tabContent">
                                <div class="tab-pane fade show active" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
-                               <SearchBar/>
+                               
+                               <div class="search-area d-flex p-4">
+                                    <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                    <button class="btn btn-primary">Search</button>
+                                </div>
+                                
                                 <div class="table-responsive">
                                     <table class="table">
                                     <AdsHead setallChecked={newallChecked => setnewallChecked(newallChecked)}/>
@@ -180,7 +200,10 @@ function Ads() {
                              </div>
                             </div>
                             <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
-                            <SearchBar/>
+                            <div class="search-area d-flex p-4">
+                                <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                <button class="btn btn-primary">Search</button>
+                            </div>
                                 <div class="table-responsive">
                                     <table class="table">
                                     <AdsHead setallChecked={assignedallChecked => setassignedallChecked(assignedallChecked)}/>
@@ -217,7 +240,10 @@ function Ads() {
                              </div>
                             </div>
                             <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
-                                <SearchBar/>
+                                <div class="search-area d-flex p-4">
+                                    <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                    <button class="btn btn-primary">Search</button>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table">
                                     <AdsHead setallChecked={pendingallChecked => setpendingallChecked(pendingallChecked)}/>
@@ -255,7 +281,11 @@ function Ads() {
                             </div>
                             <div class="tab-pane fade" id="pills-approved" role="tabpanel" aria-labelledby="pills-approved-tab">
 
-                                <SearchBar/>
+                                <div class="search-area d-flex p-4">
+                                    <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                    <button class="btn btn-primary">Search</button>
+                                </div>
+                                
                                 <div class="table-responsive">
                                     <table class="table">
                                     <AdsHead setallChecked={newallChecked => setnewallChecked(newallChecked)}/>

@@ -1,8 +1,17 @@
-import React from 'react'
+import React,{useState,useEffect}  from 'react'
+
 import AdAgents from './AdAgents'
 import SearchBar from './SearchBar'
 
 function AdAgent(props) {
+  
+  let agent = [
+    'Akbar Hussain', 'Elon Musk', 'Leo Messi', 'Will Smith', 'Ali Mohammad', 
+    'Fahad Fasil', 'Elias Vargese'
+  ];
+
+  const [agentName, setagentName] = useState("")
+
   console.log(props.product.agentName)
   return (
      
@@ -13,10 +22,13 @@ function AdAgent(props) {
                 Agent
             </div>
             <div class="card-body pe-4 ps-4">
-                <SearchBar/>
+              {
+                agentName.length?'':<SearchBar setagentName={(agentName) => setagentName(agentName)} products={agent}  />
+              }
+               
                 <div class="search-area d-flex me-5 p-4">
                     <input class="form-control me-3" placeholder="Assign Agent" />
-                    <button class="btn btn-primary">Assign</button>
+                    <button class="btn btn-primary">{agentName}</button>
                     </div>
                 <h4 class="regular-title my-3">Assigned</h4>
                 <ul class="p-0 d-flex flex-column product-description-lists">
