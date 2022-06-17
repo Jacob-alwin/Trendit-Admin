@@ -7,9 +7,6 @@ import {
   Outlet
 } from "react-router-dom";
 
-import Header from './components/Header';
-import HeaderMobile from './components/HeaderMobile';
-import Signup from './pages/Signin';
 import MainComp from './MainComp';
 import Signin from './pages/Signin';
 

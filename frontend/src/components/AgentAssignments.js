@@ -13,6 +13,10 @@ function AgentAssignments({profile}) {
     const data1 = JSON.parse(localStorage.getItem('userInfo')) 
     const [approved,setApproved] = useState([])
     const [pending,setPending] = useState([])
+     
+    const [approvedFilter,setapprovedFilter] = useState('')
+    const [pendingFilter,setpendingFilter] = useState('')
+
     useEffect(()=>{
         async function fetchData() {
       
@@ -21,20 +25,52 @@ function AgentAssignments({profile}) {
                   Authorization: `Bearer ${data1.token}`,
                 },
               } 
+
+              if (approvedFilter.length) {
+                const  data2  = await axios.get(`/api/users/approved/${profile}`,config)             
+                const res = data2.data
+                const filter = res.filter((newVal) => {
+                    return newVal.name.startsWith(approvedFilter) 
+                                           });
+              setApproved(filter)      
+
+  
+                
+  
+                
+              } else {
+                const  data2  = await axios.get(`/api/users/approved/${profile}`,config)    
+                setApproved(data2.data)         
+              }
+
+
+              if (pendingFilter.length) {
+                const  data3  = await axios.get(`/api/users/pending/${profile}`,config)
+                const res1 = data3.data
+                const filter1 = res1.filter((newVal) => {
+                    return newVal.name.startsWith(pendingFilter) 
+                          
+                  });
+
+
+                setPending(filter1)     
+                  
+                
+              } else {
+
+                const  data3  = await axios.get(`/api/users/pending/${profile}`,config)
+              setPending(data3.data)     
+                
+              }
          
-         const  data2  = await axios.get(`/api/users/approved/${profile}`,config)
-             
-              setApproved(data2.data)
-
-
-              const  data3  = await axios.get(`/api/users/pending/${profile}`,config)
-              setPending(data3.data)      
+        
+               
              
                }
                fetchData();    
       
       
-    },[data1,pending,approved])
+    },[data1,pending,approved,approvedFilter,pendingFilter])
 
     
 
@@ -95,7 +131,7 @@ function AgentAssignments({profile}) {
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
                     <div class="search-area d-flex p-4">
-                        {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                        <input class="form-control me-3" placeholder="Search user" onChange={(e) => (setapprovedFilter(e.target.value))} />
                         <button class="btn btn-primary">Search</button>
                     </div>
                                 
@@ -184,6 +220,8 @@ function AgentAssignments({profile}) {
                         </div>
                 </div>
                 <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
+                    <input class="form-control me-3" placeholder="Search user"onChange={(e) => (setpendingFilter(e.target.value))} />
+
                 <table class="table">
                 <AdsHead   setallChecked={pendingallChecked => setpendingallChecked(pendingallChecked)} />
 

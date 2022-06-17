@@ -11,6 +11,8 @@ import ReactPaginate from "react-paginate";
 function Users() {
   const [allChecked, setallChecked] = useState(false);
   const [users, setUsers] = useState([]);
+  const [usersFilter, setUsersFilter] = useState("");
+
 
   var data1 = JSON.parse(localStorage.getItem("userInfo"));
   var head = "Users";
@@ -23,27 +25,37 @@ function Users() {
         },
       };
 
-      const data = await axios.get("/api/users", config);
-      setResult(data.data);
-      //console.log(data.data)
+      if (usersFilter) {
+        const data = await axios.get("/api/users", config);
+        const res = data.data  
+        const filter = res.filter((newVal) => {
+          //Search Filtering
+          return newVal.name.startsWith(usersFilter) 
+        });
+
+        setUsers(filter);
+
+      } else {
+        const data = await axios.get("/api/users", config);
+        setUsers(data.data);  
+      }
+
     }
     fetchData();
-  }, []);
+  }, [usersFilter]);
 
-  const [result, setResult] = useState([]);
-  //   const [result2, setResult2] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
 
   const resultPerPage = 5;
   const pagesVisited = pageNumber * resultPerPage;
 
-  const displayResult = result
+  const displayResult = users
     .slice(pagesVisited, pagesVisited + resultPerPage)
     .map((user) => {
       return <UserList allChecked={allChecked} p={user} />;
     });
 
-  const pageCount = Math.ceil(result.length / resultPerPage);
+  const pageCount = Math.ceil(users.length / resultPerPage);
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -57,7 +69,7 @@ function Users() {
 
       <div class="card admin-card">
         <div class="search-area d-flex p-4">
-            {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+            <input class="form-control me-3" placeholder="Search user" onChange={(e)=>(setUsersFilter(e.target.value))} />
             <button class="btn btn-primary">Search</button>
         </div>
                                 
@@ -69,7 +81,7 @@ function Users() {
             <tbody>{displayResult.length?displayResult:''}</tbody>
           </table>
           <div class="d-flex pagination ps-4 pe-4 pb-4 align-items-center">
-                                <div>Total Results <span>{result.length}</span></div>
+                                <div>Total Results <span>{users.length}</span></div>
                                 <div class="ms-auto d-flex">
                                     {/* <span class="pointer me-2"><i class="mdi mdi-chevron-left mdi-24px"></i></span>
                                     <span class="pointer"><i class="mdi mdi-chevron-right mdi-24px"></i></span> */}

@@ -14,6 +14,7 @@ function Agent() {
 
     const [allChecked, setallChecked] = useState(false)
     const [agents,setAgents] = useState([])
+    const [agentsFilter,setAgentsFilter] = useState("")
     
     var data1 = JSON.parse(localStorage.getItem('userInfo'))
     var head = "Users"
@@ -26,14 +27,27 @@ function Agent() {
                   Authorization: `Bearer ${data1.token}`,
                 },
               }
+
+              if (agentsFilter.length) {
+                const  data  = await axios.get('/api/agent/AllAgentprofile',config)
+                const res = data.data;
+                const filter = res.filter((newVal) => {
+                  return newVal.name.startsWith(agentsFilter) 
+                        // Search Filtering
+                });
+
+                setAgents(filter)
+                
+              } else {
+                const  data  = await axios.get('/api/agent/AllAgentprofile',config)
+                setAgents(data.data)
+                
+              }
          
-              const  data  = await axios.get('/api/agent/AllAgentprofile',config)
-              setAgents(data.data)
-              console.log(data.data)
                }
                fetchData();
               
-      }, [])
+      }, [agentsFilter])
     console.log(allChecked)
 
 
@@ -78,7 +92,7 @@ function Agent() {
 
 
                     <div class="search-area d-flex p-4">
-                                    {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                                    <input class="form-control me-3" placeholder="Search user" onChange={(e) => (setAgentsFilter(e.target.value))} />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 

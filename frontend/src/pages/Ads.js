@@ -21,8 +21,8 @@ function Ads() {
     const [newProduct,setNewProduct] = useState([])
     const [assignedProduct,setAssignedProduct] = useState([])
 
-    const [pendingFilter, setpendingFilter] = useState("p")
-    const [approvedFilter, setapprovedFilter] = useState("p")
+    const [pendingFilter, setpendingFilter] = useState("")
+    const [approvedFilter, setapprovedFilter] = useState("")
 
 
     console.log(allChecked)
@@ -34,21 +34,51 @@ function Ads() {
         
             async function fetchData() {
           
+
+
              
-                  const data =  await axios.get('http://127.0.0.1:5000/api/products/admin/approved')
-                  const res = data.data;
-                  setApprovedProduct(res)
+                //Approved
 
+                if (approvedFilter.length) {
+                    const data =  await axios.get('http://127.0.0.1:5000/api/products/admin/approved')
+                    const res1 = data.data;  
+                    const filter1 = res1.filter((newVal1) => {
+                        //Search Filtering
+                        return newVal1.name.startsWith(approvedFilter) 
+                      });
+    
+                      setApprovedProduct(filter1);
+                } else {
 
-
-                   
-                  const data1 = await axios.get('http://127.0.0.1:5000/api/products/admin/pending')
-                  setPendingProduct(data1.data)
+                    const data =  await axios.get('http://127.0.0.1:5000/api/products/admin/approved')
+                  setApprovedProduct(data.data)                    
+                }
                   
+
+
+                //Pending 
+
+                if(pendingFilter.length){
+                  const data1 = await axios.get('http://127.0.0.1:5000/api/products/admin/pending')
+                  const res = data1.data;
+
+                  const filter = res.filter((newVal) => {
+                    //Search Filtering
+                    return newVal.name.startsWith(pendingFilter) 
+                  });
+
+                  setPendingProduct(filter);
+                }
+                else
+                {
+                    const data1 =  await axios.get('http://127.0.0.1:5000/api/products/admin/pending')
+                    setPendingProduct(data1.data)    
+                }
                    }
                    fetchData();
                   
-          }, [])
+          }, [pendingFilter,approvedFilter])
+          
 
      
           
@@ -91,9 +121,14 @@ function Ads() {
 
           //Pendeing
 
-          const handleChange = (e)=>{
-            setpendingFilter(e.target.value)
-          }
+          useEffect(() => {
+            
+          
+            return () => {
+              
+            }
+          }, [])
+          
 
           
 
@@ -158,7 +193,7 @@ function Ads() {
                                <div class="tab-pane fade show active" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
                                
                                <div class="search-area d-flex p-4">
-                                    <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                    <input class="form-control me-3" placeholder="Search user"  />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 
@@ -201,7 +236,7 @@ function Ads() {
                             </div>
                             <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
                             <div class="search-area d-flex p-4">
-                                <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                <input class="form-control me-3" placeholder="Search user" onChange={(e) => (setpendingFilter(e.target.value))}/>
                                 <button class="btn btn-primary">Search</button>
                             </div>
                                 <div class="table-responsive">
@@ -241,7 +276,7 @@ function Ads() {
                             </div>
                             <div class="tab-pane fade" id="pills-pending" role="tabpanel" aria-labelledby="pills-pending-tab">
                                 <div class="search-area d-flex p-4">
-                                    <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                    <input class="form-control me-3" placeholder="Search user"  onChange={(e) => (setpendingFilter(e.target.value)) }   />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 <div class="table-responsive">
@@ -282,7 +317,7 @@ function Ads() {
                             <div class="tab-pane fade" id="pills-approved" role="tabpanel" aria-labelledby="pills-approved-tab">
 
                                 <div class="search-area d-flex p-4">
-                                    <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
+                                    <input class="form-control me-3" placeholder="Search user"  onChange={(e) => (setapprovedFilter(e.target.value))} />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 

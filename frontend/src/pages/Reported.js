@@ -18,18 +18,36 @@ function Reported() {
     const [adsChecked, setadsChecked] = useState(false)
  
     const [report,setReport] = useState([])
+    const [reportFilter,setReportFilter] = useState("")
 
     useEffect(()=>{
         async function fetchData() {
+
+
+
           
-             
-            const data =  await axios.get('http://127.0.0.1:5000/api/users/admin/reported')
-            setReport(data.data)
+            if (reportFilter.length) {
+                const data =  await axios.get('http://127.0.0.1:5000/api/users/admin/reported')
+                  //Search Filtering
+                const res =data.data
+                const filter = res.filter((newVal) => {
+                    //Search Filtering
+                    return newVal.name.startsWith(reportFilter) 
+                  });
+
+                  setReport(filter);
+            } else {
+
+                const data =  await axios.get('http://127.0.0.1:5000/api/users/admin/reported')
+                setReport(data.data)
+                
+            } 
+           
             
              }
              fetchData();
             
-    }, [])
+    }, [reportFilter])
 
 
 
@@ -69,7 +87,7 @@ function Reported() {
                     <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab">
                             <div class="search-area d-flex p-4">
-                                    {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                                    <input class="form-control me-3" placeholder="Search user" onChange={(e) => (setReportFilter(e.target.value))} />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 
@@ -114,9 +132,9 @@ function Reported() {
                         </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
+                            {/* <div class="tab-pane fade" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
                             <div class="search-area d-flex p-4">
-                                    {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                                    <input class="form-control me-3" placeholder="Search user" onChange={handleChange} />
                                     <button class="btn btn-primary">Search</button>
                                 </div>
                                 
@@ -130,7 +148,7 @@ function Reported() {
                             </tbody>
                         </table>
                        <TableFooter/>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>    

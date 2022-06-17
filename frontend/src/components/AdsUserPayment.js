@@ -12,6 +12,7 @@ import axios from 'axios'
 
   const [allChecked, setallChecked] = useState(false)
   const [payment,setPayment] = useState([])
+  const [paymentFilter,setpaymentFilter] = useState('')
   
    useEffect(() => {
    
@@ -23,15 +24,28 @@ import axios from 'axios'
           },
         } 
    console.log(props.p._id)
+
+   if (paymentFilter.length) {
+    
+      const  data9  = await axios.get('/api/users/payment/abc',config)     
+      const res = data9.data
+      const filter = res.filter((newVal) => {
+          return newVal.name.startsWith(paymentFilter) 
+                //      ^^^^ pass the data to get the payemnts name to search filer
+        });
+
+    setPayment(filter)      
+
+   } else {
    const  data9  = await axios.get('/api/users/payment/abc',config)
-       
-        setPayment(data9.data)
-       
+   setPayment(data9.data)
+   }
+
          }
          fetchData();
 
   }, [])
-  console.log(payment)
+  console.log(payment,paymentFilter)
 
 
 
@@ -57,7 +71,7 @@ import axios from 'axios'
 <h4 class="page-sub-title mt-4">Payments</h4>
                     <div class="card admin-card">
                       <div class="search-area d-flex p-4">
-                          {/* <input class="form-control me-3" placeholder="Search user" onChange={handleChange} /> */}
+                          <input class="form-control me-3" placeholder="Search user" onChange={(e) => (setpaymentFilter(e.target.value))} />
                           <button class="btn btn-primary">Search</button>
                       </div>
                       
