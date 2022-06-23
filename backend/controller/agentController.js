@@ -4,9 +4,6 @@ import User from '../models/user.js'
 import Product from '../models/product.js'
 import Agent from '../models/agent.js'
 
-
-
-
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body
   
@@ -64,9 +61,6 @@ const authUser = asyncHandler(async (req, res) => {
         "$and":[
             {agentName:req.params.name},
             {verified: {$eq: true}},
-           
-           
-
         ]
     })
     console.log(products)

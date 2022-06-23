@@ -1,16 +1,45 @@
 import React,{useState,useEffect}  from 'react'
+import axios from 'axios';
 
 import AdAgents from './AdAgents'
 import SearchBar from './SearchBar'
 
 function AdAgent(props) {
-  
-  let agent = [
-    'Akbar Hussain', 'Elon Musk', 'Leo Messi', 'Will Smith', 'Ali Mohammad', 
-    'Fahad Fasil', 'Elias Vargese'
-  ];
 
+
+
+
+
+  var data1 = JSON.parse(localStorage.getItem('userInfo'))
+  
   const [agentName, setagentName] = useState("")
+  const [agentnamelist, setagentNamelist] = useState([])
+
+  let agent=[]
+
+       
+  useEffect(() => {
+        
+    async function fetchData() {
+        console.log("hii")
+        const config = {
+            headers: {
+              Authorization: `Bearer ${data1.token}`,
+            },
+          }
+          const  data  = await axios.get('/api/agent/AllAgentprofile',config)
+          const res = data.data;
+          res.map((profile) => {
+            agent.push(profile.name)
+          });
+          setagentNamelist(agent)
+           }
+           fetchData();
+          
+  }, [])
+  
+ 
+
 
   console.log(props.product.agentName)
   return (
@@ -23,16 +52,15 @@ function AdAgent(props) {
             </div>
             <div class="card-body pe-4 ps-4">
               {
-                agentName.length?'':<SearchBar setagentName={(agentName) => setagentName(agentName)} products={agent}  />
+                agentName.length?'':<SearchBar setagentName={(agentName) => setagentName(agentName)} products={agentnamelist}  />
               }
                
                 <div class="search-area d-flex me-5 p-4">
-                    <input class="form-control me-3" placeholder="Assign Agent" />
-                    <button class="btn btn-primary">{agentName}</button>
+                    
                     </div>
                 <h4 class="regular-title my-3">Assigned</h4>
                 <ul class="p-0 d-flex flex-column product-description-lists">
-                <AdAgents agent={props.product.agentName}/>
+                <AdAgents agent={agentName}/>
                 
              
                 </ul>

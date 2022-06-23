@@ -4,7 +4,6 @@ import Headings from "../components/Headings";
 import SearchBar from "../components/SearchBar";
 import UserList from "../components/UserList";
 import UserNameEmailHead from "../components/UserNameEmailHead";
-import TableFooter from "../components/TableFooter";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 
@@ -48,11 +47,12 @@ function Users() {
 
   const resultPerPage = 5;
   const pagesVisited = pageNumber * resultPerPage;
+  
 
   const displayResult = users
     .slice(pagesVisited, pagesVisited + resultPerPage)
     .map((user) => {
-      return <UserList allChecked={allChecked} p={user} />;
+      return <UserList key={user._id} allChecked={allChecked} p={user} />;
     });
 
   const pageCount = Math.ceil(users.length / resultPerPage);
@@ -60,8 +60,6 @@ function Users() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-
-  
 
   return (
     <div class="main-content py-3">
